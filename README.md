@@ -1,7 +1,7 @@
 # clien_rss
 
 A brief introduction:
-    Build RSS code for RSS build code for the Korean community site 'Clien'
+    Build RSS code for the Korean community site 'Clien'
 
 
 Environment:
