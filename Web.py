@@ -116,6 +116,6 @@ def get_number(elements):
 
 
 # Module Test Code
-s1 = 'clien'
-u1 = 'https://www.clien.net/service/board/news?&po=0'
-Parsing_BBS(s1, u1, 0, 0, 'https://www.clien.net', 'test_rss')
+# s1 = 'clien'
+# u1 = 'https://www.clien.net/service/board/news?&po=0'
+# Parsing_BBS(s1, u1, 0, 0, 'https://www.clien.net', 'test_rss')
