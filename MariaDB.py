@@ -11,7 +11,7 @@ MariaTable = CurEnv['table']
 
 def ReadSQL(rss_name):
     query = "SELECT * FROM " + MariaTable
-    query += " WHERE file = %(rss_name)s order by sn DESC limit 80"
+    query += " WHERE file = %(rss_name)s order by pubdate DESC limit 80"
     data = {'rss_name': rss_name}
     return QuerySQL(query, data, True)
 
