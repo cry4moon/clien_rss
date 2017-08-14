@@ -3,12 +3,12 @@ import sys
 
 Envs = {
    'PCName': {
-       'OutPath': 'YourOutPath/',
-       'db': 'YourDBname',
-       'table': 'YourTableNameForPC'
+       'OutPath': 'YourOutPathForPC/',
+       'db': 'YourTestDBname',
+       'table': 'YourTestTableNameForPC'
    },
    'NasName': {
-       'OutPath': '/YourOutPath/',
+       'OutPath': '/YourOutPathForNas/',
        'db': 'YourDBname',
        'table': 'YourTableNameForNas'
    }
