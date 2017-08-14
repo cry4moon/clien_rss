@@ -6,18 +6,18 @@ import datetime
 import MariaDB
 
 
-def Build_RSS(r_path, r_file, r_home, r_desc):
+def Build_RSS(r_path, r_filename, r_home, r_desc):
     # Setup RSS
     t_delta = datetime.timedelta(hours=9)
     rss = PyRSS2Gen.RSS2(
-        title=r_file,
+        title=r_filename,
         link=r_home,
         description=r_desc,
         lastBuildDate=datetime.datetime.utcnow(),
         items=[])
 
     # Read DB for Current RSS
-    CurData = MariaDB.ReadSQL(r_file)
+    CurData = MariaDB.ReadSQL(r_filename)
 
     # Append Item to RSS
     for r in CurData:
@@ -32,20 +32,20 @@ def Build_RSS(r_path, r_file, r_home, r_desc):
 
     # Write RSS
     rss.write_xml(
-        open(r_path + "rss_" + r_file + ".htm", 'w', encoding='utf-8'),
+        open(r_path + "rss_" + r_filename + ".htm", 'w', encoding='utf-8'),
         encoding="utf-8"
     )
 
 
-def Parsing_BBS(site, link, rep_cond, rec_cond, t_home, t_file):
+def Parsing_BBS(site, link, rep_cond, rec_cond, t_home, rss_name):
     if site == 'clien':
-        Parsing_BBS_Clien(link, rep_cond, rec_cond, t_home, t_file)
+        Parsing_BBS_Clien(link, rep_cond, rec_cond, t_home, rss_name)
 
 
-def Parsing_BBS_Clien(link, rep_cond, rec_cond, t_home, t_file):
+def Parsing_BBS_Clien(link, rep_cond, rec_cond, t_home, rss_name):
     # Set deadline, clear old database
     deadline = (datetime.datetime.now() - datetime.timedelta(days=7)).date()
-    MariaDB.DeleteSQL(deadline, t_file)
+    MariaDB.DeleteSQL(deadline, rss_name)
 
     # Parsing
     html = Read_Html(link)
@@ -72,7 +72,7 @@ def Parsing_BBS_Clien(link, rep_cond, rec_cond, t_home, t_file):
         # If reply >= rep_cond Parsing Post
         if r_count >= rep_cond:
             # Dup post check by 'url'
-            if not MariaDB.UpdateSQL(url, r_count, s_count):
+            if not MariaDB.UpdateSQL(rss_name, url, r_count, s_count):
                 html = Read_Html(t_home + url)
                 soup = BeautifulSoup(html, "html.parser")
                 elements = soup.findAll("body")
@@ -87,7 +87,7 @@ def Parsing_BBS_Clien(link, rep_cond, rec_cond, t_home, t_file):
                 author = re.search("[\w]+(?=\')", str(auth1[0])).group()
 
                 # Post Info Insert to DB
-                MariaDB.InsertSQL(t_file, category, title, text, url, pubdate, author, r_count, s_count)
+                MariaDB.InsertSQL(rss_name, category, title, text, url, pubdate, author, r_count, s_count)
         continue
 
 
