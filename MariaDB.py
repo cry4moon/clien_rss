@@ -23,12 +23,12 @@ def DeleteSQL(deadline, t_file):
     QuerySQL(query, data, False)
 
 
-def UpdateSQL(url, reply, recom):
+def UpdateSQL(rss_name, url, reply, recom):
     bFind = False
     # MariaDB Select by url
     query = "SELECT reply, recom FROM " + MariaTable
-    query += " WHERE url = %(url)s"
-    data = {'url': url}
+    query += " WHERE url = %(url)s AND file = %(rss_name)s"
+    data = {'url': url, 'rss_name': rss_name}
     rows = QuerySQL(query, data, True)
 
     if len(rows) > 0:
