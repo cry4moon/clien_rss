@@ -8,6 +8,7 @@ import MariaDB
 
 def Build_RSS(r_path, r_file, r_home, r_desc):
     # Setup RSS
+    t_delta = datetime.timedelta(hours=9)
     rss = PyRSS2Gen.RSS2(
         title=r_file,
         link=r_home,
@@ -25,7 +26,7 @@ def Build_RSS(r_path, r_file, r_home, r_desc):
             link=r_home + r['url'],
             guid=PyRSS2Gen.Guid(r_home + r['url']),
             description=str(r['text']),
-            pubDate=r['pubdate'],
+            pubDate=r['pubdate'] - t_delta,
             author=r['author'])
         rss.items.append(item)
 
